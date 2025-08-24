@@ -566,7 +566,7 @@ const Preferences: React.FC<PreferencesProps> = ({ sessionId, onCitySelect }) =>
           <Button onClick={handleDeleteCancel} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleDeleteConfirm} color="error" variant="contained">
+          <Button loading={deletingCity !== null} onClick={handleDeleteConfirm} color="error" variant="contained">
             Delete
           </Button>
         </DialogActions>
