@@ -7,7 +7,7 @@ export const generateSessionId = (): string => {
 
 // Get user's current city using geolocation and reverse geocoding
 export const getUserCurrentCity = (): Promise<string> => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     if (!navigator.geolocation) {
     
       resolve('Coimbatore');

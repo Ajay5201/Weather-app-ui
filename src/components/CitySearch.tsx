@@ -123,7 +123,7 @@ const CitySearch: React.FC<CitySearchProps> = ({ onCitySelect, currentCity }) =>
     }
   };
 
-  const handleInputChange = (event: any, newInputValue: string, reason: string) => {
+  const handleInputChange = (_event: any, newInputValue: string, reason: string) => {
 
     if (reason === 'input') {
       setSelectedCity(null);
@@ -131,7 +131,7 @@ const CitySearch: React.FC<CitySearchProps> = ({ onCitySelect, currentCity }) =>
     setSearchQuery(newInputValue);
   };
 
-  const handleClose = (event: any, reason: string) => {
+  const handleClose = (_event: any, reason: string) => {
 
     if (reason === 'escape' || reason === 'blur') {
       if (selectedCity && !searchQuery) {

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {
   Container,
   Box,
-  CssBaseline,
 } from '@mui/material';
 import CurrentWeather from './CurrentWeather';
 import HourlyForecast from './HourlyForecast';
@@ -17,7 +16,7 @@ interface WeatherScreenProps {
   sessionId: string;
 }
 
-const WeatherScreen: React.FC<WeatherScreenProps> = ({ currentCity, sessionId }) => {
+const WeatherScreen: React.FC<WeatherScreenProps> = ({ currentCity }) => {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -32,7 +31,7 @@ const WeatherScreen: React.FC<WeatherScreenProps> = ({ currentCity, sessionId })
     try {
       setLoading(true);
       setError(null);
-      
+
       const weatherResponse = await apiService.getWeatherForecast(currentCity);
       if (weatherResponse.status === 'SUCCESS') {
         setWeatherData(weatherResponse.data);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
   CssBaseline,
   ThemeProvider,
@@ -86,7 +86,7 @@ export const SESSION_KEY = "userSession";
 
 // Main App Content Component
 function AppContent() {
-  const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
+  const [, setWeatherData] = useState<WeatherData | null>(null);
   const [currentCity, setCurrentCity] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

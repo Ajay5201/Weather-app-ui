@@ -25,7 +25,6 @@ import {
   Favorite as FavoriteIcon,
   Menu as MenuIcon,
   Home as HomeIcon,
-  Settings as SettingsIcon,
 } from '@mui/icons-material';
 import { COLORS } from '../constants/colors';
 import CitySearch from './CitySearch';
