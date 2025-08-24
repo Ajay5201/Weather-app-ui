@@ -56,7 +56,7 @@ A modern, responsive weather forecast application built with React, TypeScript, 
 
 The app requires the following API endpoints to be running:
 
-### Base URL: `http://localhost:3000/api/v1`
+### Base URL: `http://localhost:3000` OR Update with the backend hosted URL
 
 #### 1. Create User Session
 ```http
@@ -81,19 +81,13 @@ GET /api/v1/city-lookup/search?query={search-term}
 Accept: application/json
 ```
 
-#### 4. Multi-City Weather Forecast
-```http
-GET /api/v1/weather/multi-forecast?cities={city1,city2,city3}
-Accept: application/json
-```
-
-#### 5. Get User Preferences
+#### 4. Get User Preferences
 ```http
 GET /api/v1/user/preferences/{sessionId}
 Accept: application/json
 ```
 
-#### 6. Remove City from Preferences
+#### 5. Remove City from Preferences
 ```http
 DELETE /api/v1/user/remove-city
 Content-Type: application/json
@@ -162,8 +156,6 @@ src/
 - **Click to view weather** functionality for quick access
 - **Empty state** with helpful messaging
 - **Loading states** and error handling
-- **Efficient batch API** for fetching weather data for all cities in a single request
-- **Dynamic weather cards** with background gradients based on weather conditions
 
 ## Color Scheme
 
@@ -205,32 +197,13 @@ npm run dev
 # Build for production
 npm run build
 
-# Preview production build
-npm run preview
-
-# Run linting
-npm run lint
 ```
 
 ## Environment Variables
 
 No environment variables are required for basic functionality. The API base URL is configured in `src/services/api.ts`.
 
-## Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
-
-## License
-
-This project is licensed under the MIT License.
-
-## Support
-
-For support or questions, please open an issue in the repository.
 
 ---
 
