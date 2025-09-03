@@ -89,7 +89,7 @@ const WeatherScreen: React.FC<WeatherScreenProps> = ({ currentCity }) => {
       {weatherData && (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
           {/* Current Weather */}
-          <CurrentWeather weather={weatherData.current} city={weatherData.city} />
+          <CurrentWeather weather={weatherData.current} city={weatherData.city} summary={weatherData.summary || ''} />
 
           {/* Hourly Forecast */}
           <HourlyForecast hourlyData={weatherData.hourly} />

@@ -5,6 +5,7 @@ export interface WeatherResponse {
 
 export interface WeatherData {
   city: string;
+  summary: string;
   current: CurrentWeather;
   hourly: HourlyForecast[];
   daily: DailyForecast[];

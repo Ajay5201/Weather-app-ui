@@ -4,7 +4,6 @@ import {
   CardContent,
   Box,
   Typography,
-
   Chip,
   Avatar,
   Paper,
@@ -20,6 +19,7 @@ import {
   Visibility,
   NightsStay,
   CalendarToday,
+  Description,
 } from '@mui/icons-material';
 import Grid from '@mui/material/Grid';
 import type { CurrentWeather as CurrentWeatherType } from '../types/weather';
@@ -29,13 +29,13 @@ import { formatTemperature, getWeatherIconUrl, getWeatherConditionColor } from '
 interface CurrentWeatherProps {
   weather: CurrentWeatherType;
   city: string;
-  date?: string; // Added date prop
+  date?: string;
+  summary?: string;
 }
 
-const CurrentWeather: React.FC<CurrentWeatherProps> = ({ weather, city, date }) => {
+const CurrentWeather: React.FC<CurrentWeatherProps> = ({ weather, city, date, summary }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
 
   const formatTime = (timeString: string) => {
     return new Date(timeString).toLocaleTimeString('en-US', {
@@ -53,6 +53,43 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = ({ weather, city, date }) 
       month: 'long',
       day: 'numeric',
     });
+  };
+
+  // Generate a default summary if none provided
+  const getWeatherSummary = () => {
+    if (summary) {
+      return summary;
+    }
+
+    // Generate a basic summary based on weather data
+    // const temp = Math.round(weather.temperature);
+    // const condition = weather.condition.toLowerCase();
+    // const humidity = weather.humidity;
+    // const windSpeed = Math.round(weather.windSpeed);
+
+    // let summary = `Currently ${temp}°C with ${weather.condition.toLowerCase()} conditions in ${city}. `;
+
+    // if (humidity > 70) {
+    //   summary += "High humidity levels may make it feel warmer. ";
+    // } else if (humidity < 30) {
+    //   summary += "Low humidity creates dry conditions. ";
+    // }
+
+    // if (windSpeed > 10) {
+    //   summary += "Expect breezy conditions with moderate winds. ";
+    // } else if (windSpeed < 3) {
+    //   summary += "Calm winds throughout the area. ";
+    // }
+
+    // if (condition.includes('rain')) {
+    //   summary += "Keep an umbrella handy for any precipitation.";
+    // } else if (condition.includes('sun') || condition.includes('clear')) {
+    //   summary += "Perfect weather for outdoor activities.";
+    // } else if (condition.includes('cloud')) {
+    //   summary += "Overcast skies with comfortable conditions.";
+    // }
+
+    // return summary;
   };
 
   const weatherMetrics = [
@@ -109,7 +146,7 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = ({ weather, city, date }) 
       }}
     >
       <CardContent sx={{ p: { xs: 2, sm: 3, md: 4 } }}>
-
+        {/* Header Section */}
         <Box sx={{ mb: 4 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
             <Box>
@@ -133,8 +170,7 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = ({ weather, city, date }) 
                 </Typography>
               </Box>
             </Box>
-            {
-              !isMobile &&
+            {!isMobile && (
               <Chip
                 label={weather.condition}
                 sx={{
@@ -148,9 +184,65 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = ({ weather, city, date }) 
                   border: '1px solid rgba(255,255,255,0.2)',
                 }}
               />
-            }
+            )}
           </Box>
         </Box>
+
+
+        {
+          summary !== '' &&
+          <Paper
+            elevation={0}
+            sx={{
+              background: 'linear-gradient(135deg, rgba(96, 125, 139, 0.1) 0%, rgba(84, 110, 122, 0.05) 100%)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: 3,
+              border: '1px solid rgba(96, 125, 139, 0.2)',
+              p: { xs: 2.5, sm: 3 },
+              mb: 3,
+            }}
+          >
+            <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
+              <Avatar
+                sx={{
+                  backgroundColor: '#607D8B',
+                  width: { xs: 40, sm: 48 },
+                  height: { xs: 40, sm: 48 },
+                  boxShadow: '0 4px 12px rgba(96, 125, 139, 0.3)',
+                  flexShrink: 0,
+                  display: { xs: 'none', md: 'auto' }
+                }}
+              >
+                <Description />
+              </Avatar>
+              <Box sx={{ flex: 1, minWidth: 0 }}>
+                <Typography
+                  variant="subtitle1"
+                  sx={{
+                    color: COLORS.text.primary,
+                    fontWeight: 600,
+                    mb: 1,
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                >
+                  Weather Summary
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: COLORS.text.secondary,
+                    lineHeight: 1.6,
+                    fontSize: { xs: '0.95rem', sm: '1rem' },
+                    fontWeight: 400,
+                  }}
+                >
+                  {getWeatherSummary()}
+                </Typography>
+              </Box>
+            </Box>
+          </Paper>
+        }
 
 
         <Paper
@@ -205,14 +297,27 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = ({ weather, city, date }) 
               >
                 Feels like {formatTemperature(weather.feelsLike)}
               </Typography>
+              {/* Mobile condition chip */}
+              {isMobile && (
+                <Chip
+                  label={weather.condition}
+                  size="small"
+                  sx={{
+                    mt: 1,
+                    background: `linear-gradient(45deg, ${getWeatherConditionColor(weather.condition)}, ${getWeatherConditionColor(weather.condition)}CC)`,
+                    color: 'white',
+                    fontWeight: 600,
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                  }}
+                />
+              )}
             </Box>
           </Box>
         </Paper>
 
-
+        {/* Weather Metrics Section */}
         {isMobile ? (
           <Box sx={{ mb: 3 }}>
-
             <Grid container spacing={2} sx={{ mb: 2 }} justifyContent={'center'}>
               {weatherMetrics.slice(0, 2).map((metric, index) => (
                 <Grid key={index}>
@@ -336,7 +441,6 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = ({ weather, city, date }) 
             </Grid>
           </Box>
         ) : (
-
           <Grid container spacing={{ xs: 2, sm: 2, md: 3 }} justifyContent={'center'}>
             {weatherMetrics.map((metric, index) => (
               <Grid key={index}>
@@ -399,11 +503,11 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = ({ weather, city, date }) 
           </Grid>
         )}
 
-
+        {/* Sunrise/Sunset Section */}
         <Box sx={{ mt: 3 }}>
           <Divider sx={{ mb: 3, background: 'rgba(0,0,0,0.08)' }} />
           <Grid container spacing={{ xs: 2, sm: 3 }} justifyContent={'center'}>
-            <Grid >
+            <Grid>
               <Paper
                 elevation={0}
                 sx={{
@@ -452,7 +556,7 @@ const CurrentWeather: React.FC<CurrentWeatherProps> = ({ weather, city, date }) 
               </Paper>
             </Grid>
 
-            <Grid >
+            <Grid>
               <Paper
                 elevation={0}
                 sx={{
